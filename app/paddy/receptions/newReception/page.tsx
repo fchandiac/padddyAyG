@@ -24,11 +24,19 @@ interface Reception {
   netWeight: number;
   notes: string;
   humidity: number;
+  humidityPercent: number;
   green: number;
+  greenPercent: number;
   impurity: number;
+  impurityPercent: number;
   hualcacho: number;
+  hualcachoPercent: number;
   brokenGrain: number;
+  brokenGrainPercent: number;
   plateNumber: string;
+  discountPercent: number;
+  discount: number;
+  totalWeight: number;
 }
 
 const producers = [
@@ -61,6 +69,13 @@ const factors = {
   brokenGrain: 1.5,
 };
 
+// Definir pestañas y rutas
+const tabs = [
+  { label: "Productos", path: "/adminApp/products" },
+  { label: "Categorías", path: "/adminApp/products/categories" },
+  { label: "Familias", path: "/adminApp/products/families" },
+];
+
 export default function Page() {
   const [reception, setReception] = useState<Reception>({
     guide: "",
@@ -79,14 +94,36 @@ export default function Page() {
     impurity: 0,
     hualcacho: 0,
     brokenGrain: 0,
+    humidityPercent: 0,
+    greenPercent: 0,
+    impurityPercent: 0,
+    hualcachoPercent: 0,
+    brokenGrainPercent: 0,
+    discount: 0,
+    discountPercent: 0,
+    totalWeight: 0,
   });
 
   useEffect(() => {
     setReception((prev) => ({
       ...prev,
+
       netWeight: prev.weihgt - prev.tare,
+
     }));
   }, [reception.weihgt, reception.tare]);
+
+  useEffect(() => {
+    const totalDiscountPercent = reception.greenPercent + reception.impurityPercent + reception.hualcachoPercent + reception.brokenGrainPercent;
+    const totalDiscount = (totalDiscountPercent / 100) * reception.netWeight;
+    setReception((prev) => ({
+      ...prev,
+      discountPercent: totalDiscountPercent,
+      discount: totalDiscount,
+      totalWeight: reception.netWeight - totalDiscount,
+    }));
+
+  }, [reception.greenPercent, reception.impurityPercent, reception.hualcachoPercent, reception.brokenGrainPercent, reception.netWeight]);
 
   const handleProducerChange = (event: any, value: any) => {
     if (value) {
@@ -111,9 +148,6 @@ export default function Page() {
     <>
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
         <Grid container spacing={2}>
-          <Grid item lg={12}>
-            <Typography variant="h5">Nueva Recepción</Typography>
-          </Grid>
           {/* Autocomplete for Producer */}
           <Grid item lg={12}>
             <Autocomplete
@@ -199,7 +233,7 @@ export default function Page() {
             fullWidth />
           </Grid>
           <Grid item lg={6} textAlign={"right"}>
-            <Typography variant="h6">Peso Neto: {reception.netWeight + ' Kg'}</Typography>
+            <Typography variant="h6">Peso Neto: {reception.netWeight + 'Kg'}</Typography>
           </Grid>
           <Grid item lg={12}>
             <Divider />
@@ -220,9 +254,18 @@ export default function Page() {
             <TextField
               size="small"
               label="Verde"
+              type="number"
+              value={reception.green}
+              onChange={(e) => {
+                setReception((prev) => ({
+                  ...prev,
+                  green: Number(e.target.value),
+                  greenPercent: Number(e.target.value) * factors.green,
+                }));
+              }}
               fullWidth
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{reception.humidityPercent}%</InputAdornment>,
               }}
             />
           </Grid>
@@ -230,19 +273,37 @@ export default function Page() {
             <TextField
               size="small"
               label="Impureza"
+              value={reception.impurity}
+              onChange={(e) => {
+                setReception((prev) => ({
+                  ...prev,
+                  impurity: Number(e.target.value),
+                  impurityPercent: Number(e.target.value) * factors.impurity,
+                }));
+              }}
+              type="number"
               fullWidth
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{reception.impurityPercent}%</InputAdornment>,
               }}
             />
           </Grid>
           <Grid item lg={3}>
             <TextField
               size="small"
+              value={reception.hualcacho}
+              type="number"
               label="Hualcacho"
+              onChange={(e) => {
+                setReception((prev) => ({
+                  ...prev,
+                  hualcacho: Number(e.target.value),
+                  hualcachoPercent: Number(e.target.value) * factors.hualcacho,
+                }));
+              }}
               fullWidth
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{reception.hualcachoPercent}%</InputAdornment>,
               }}
             />
           </Grid>
@@ -256,23 +317,28 @@ export default function Page() {
                 setReception((prev) => ({
                   ...prev,
                   brokenGrain: Number(e.target.value),
+                  brokenGrainPercent: Number(e.target.value) * factors.brokenGrain,
                 }));
               }}
               fullWidth
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    {reception.brokenGrain * factors.brokenGrain}%
+                    {reception.brokenGrainPercent}%
                   </InputAdornment>
                 ),
               }}
             />
           </Grid>
           <Grid item lg={9} textAlign={"right"}>
-            <Typography variant="h6">Castigo:</Typography>
+            <Typography variant="h6">Castigo:{' ' + reception.discountPercent + '% - ' + reception.discount + 'Kg'}</Typography>
           </Grid>
           <Grid item lg={12}>
             <Divider />
+          </Grid>
+          <Grid item lg={12}>
+
+        <Typography variant="h6">Total Kilos Neto: {reception.totalWeight}</Typography>
           </Grid>
           <Grid item lg={12}>
             <TextField

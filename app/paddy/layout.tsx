@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       <TopBar />
-      <Container>{children}</Container>
+      {children}
     </>
   );
 }
