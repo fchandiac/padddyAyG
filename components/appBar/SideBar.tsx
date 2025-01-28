@@ -27,7 +27,7 @@ export default function SideBar({ open, toggleDrawer }: SideBarProps) {
         <MenuItem onClick={() => {
             router.push('/paddy');
             toggleDrawer(false);
-        }}>Home</MenuItem>
+        }}>Dashboard</MenuItem>
           <MenuItem onClick={() => {
             router.push('/paddy/receptions/newReception');
             toggleDrawer(false);

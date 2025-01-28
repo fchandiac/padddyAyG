@@ -9,9 +9,8 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
 
   // Definir pestañas y rutas
   const tabs = [
-    { label: "Nueva Recepción", path: "/paddy/receptions/newReception" },
-    { label: "Descuentos", path: "/paddy/receptions/newReception/discounts" },
-    { label: "Tipos de Arróz", path: "/paddy/receptions/newReception/typesRice" },
+    { label: "Productores", path: "/paddy/producers" },
+    { label: "Cuentas", path: "/paddy/producers/accounts" },
   ];
 
   // Determinar qué pestaña está activa
