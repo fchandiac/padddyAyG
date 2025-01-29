@@ -45,10 +45,10 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
       </Tabs>
 
       {/* Contenido principal */}
-      <Box sx={{ marginTop: 2 }}>
-        <Container>
+      <Box sx={{ margin: 2 }}>
+   
             {children}
-        </Container>
+   
  
         </Box>
     </Box>

@@ -1,5 +1,5 @@
 import TopBar from "@/components/appBar/AppBar";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 export default function RootLayout({
   children,
@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       <TopBar />
-      {children}
+     {children}
     </>
   );
 }

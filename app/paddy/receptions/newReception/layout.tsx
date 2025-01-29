@@ -3,7 +3,11 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs, Tab, Box, Container } from "@mui/material";
 
-export default function ProductLayout({ children }: { children: React.ReactNode }) {
+export default function ProductLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -11,7 +15,10 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
   const tabs = [
     { label: "Nueva Recepción", path: "/paddy/receptions/newReception" },
     { label: "Descuentos", path: "/paddy/receptions/newReception/discounts" },
-    { label: "Tipos de Arróz", path: "/paddy/receptions/newReception/typesRice" },
+    {
+      label: "Tipos de Arróz",
+      path: "/paddy/receptions/newReception/typesRice",
+    },
   ];
 
   // Determinar qué pestaña está activa
@@ -22,8 +29,7 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
   };
 
   return (
-    <Box>
-      {/* Barra de pestañas sticky */}
+    <>
       <Tabs
         value={currentTab}
         onChange={handleChange}
@@ -33,10 +39,10 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
         allowScrollButtonsMobile
         sx={{
           paddingX: 2,
-          position: 'sticky',
+          position: "sticky",
           top: 60,
           zIndex: 1000, // Asegurar que la barra esté por encima de otros elementos
-          bgcolor: 'background.paper', // Fondo para que no sea transparente
+          bgcolor: "background.paper", // Fondo para que no sea transparente
           boxShadow: 1, // Opcional: sombra para resaltar la barra
         }}
       >
@@ -47,11 +53,8 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
 
       {/* Contenido principal */}
       <Box sx={{ marginTop: 2 }}>
-        <Container>
-            {children}
-        </Container>
- 
-        </Box>
-    </Box>
+        <Container>{children}</Container>
+      </Box>
+    </>
   );
 }

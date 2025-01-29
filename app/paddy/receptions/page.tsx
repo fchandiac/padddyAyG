@@ -1,5 +1,5 @@
 import AppDataGrid from "@/components/appDataGrid/AppDataGrid";
-import { Grid, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import React from "react";
 
 const receptionsList = [
@@ -51,66 +51,73 @@ const receptionsList = [
 
 export default function page() {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "guide", headerName: "Guía", width: 200 },
-    { field: "producerRut", headerName: "Rut Productor", width: 200 },
-    { field: "producerName", headerName: "Nombre Productor", width: 200 },
-    { field: "documentDate", headerName: "Fecha Documento", width: 200 },
-    { field: "typeRiceId", headerName: "Tipo Arroz", width: 200 },
-    { field: "weihgt", headerName: "Peso", width: 200 },
-    { field: "tare", headerName: "Tara", width: 200 },
-    { field: "netWeight", headerName: "Peso Neto", width: 200 },
-    { field: "notes", headerName: "Notas", width: 200 },
-    { field: "humidityPercent", headerName: "Humedad (%)", width: 200 },
-    { field: "greenPercent", headerName: "Verde (%)", width: 200 },
-    { field: "impurityPercent", headerName: "Impureza (%)", width: 200 },
-    { field: "hualcachoPercent", headerName: "Hualcacho (%)", width: 200 },
+    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "guide", headerName: "Guía", flex: 0.5 },
+    { field: "producerRut", headerName: "Rut Productor", flex: 1 },
+    { field: "producerName", headerName: "Nombre Productor", flex: 1 },
+    {
+      field: "documentDate",
+      headerName: "Fecha Documento",
+      flex: 1,
+      type: "date",
+    },
+    { field: "typeRiceId", headerName: "Tipo Arroz", flex: 1 },
+    { field: "weihgt", headerName: "Peso", flex: 1 },
+    { field: "tare", headerName: "Tara", flex: 1 },
+    { field: "netWeight", headerName: "Peso Neto", flex: 1 },
+    { field: "notes", headerName: "Notas", flex: 1 },
+    { field: "humidityPercent", headerName: "Humedad (%)", flex: 1 },
+    { field: "greenPercent", headerName: "Verde (%)", flex: 1 },
+    { field: "impurityPercent", headerName: "Impureza (%)", flex: 1 },
+    { field: "hualcachoPercent", headerName: "Hualcacho (%)", flex: 1 },
     {
       field: "brokenGrainPercent",
       headerName: "Grano Quebrado (%)",
-      width: 200,
+      flex: 1,
     },
-    { field: "plateNumber", headerName: "Placa", width: 200 },
-    { field: "discountPercent", headerName: "Descuento (%)", width: 200 },
-    { field: "discount", headerName: "Descuento", width: 200 },
-    { field: "totalWeight", headerName: "Peso Total", width: 200 },
+    { field: "plateNumber", headerName: "Placa patente", flex: 1 },
+    { field: "discountPercent", headerName: "Descuento (%)", flex: 1 },
+    { field: "discount", headerName: "Descuento", flex: 1 },
+    { field: "totalWeight", headerName: "Peso Total", flex: 1 },
   ];
 
   return (
     <>
-      <Grid container spacing={1} mt={2} ml={1} mr={1}>
-        <Grid item xs={3}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <TextField
-                label="Fecha inicial"
-                variant="outlined"
-                type="date"
-                fullWidth
-                size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Fecha final"
-                variant="outlined"
-                type="date"
-                fullWidth
-                size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+      <Box sx={{ m: 2 }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={3}>
+                <TextField
+                  label="Fecha inicial"
+                  variant="outlined"
+                  type="date"
+                  fullWidth
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label="Fecha final"
+                  variant="outlined"
+                  type="date"
+                  fullWidth
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <AppDataGrid rows={receptionsList} columns={columns} />
+          </Grid>
         </Grid>
-        <Grid item xs={9}>
-          <AppDataGrid rows={receptionsList} columns={columns} />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

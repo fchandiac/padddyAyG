@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarQuickFilter, GridFooter } from "@mui/x-data-grid";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DownloadIcon from "@mui/icons-material/Download";
 
 interface AppDataGridProps {
   rows: any[];
@@ -35,6 +36,23 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ title = "" }) => {
   );
 };
 
+const CustomFooter: React.FC = () => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "right",
+        padding: 2,
+        gap: 2,
+        borderTop: "1px solid #ccc",
+      }}
+    >
+      <DownloadIcon />
+    </Box>
+  );
+};
+
 export default function AppDataGrid({
   rows,
   columns,
@@ -49,6 +67,7 @@ export default function AppDataGrid({
       getRowHeight={() => "auto"}
       slots={{
         toolbar: () => <CustomToolbar title={title} />, // Personaliza el título aquí
+        footer: () => <CustomFooter />,
       }}
     />
   );
